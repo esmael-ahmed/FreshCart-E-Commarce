@@ -34,7 +34,8 @@ export default function Payment() {
                     token: localStorage.getItem('token'),
                 }, 
                 params: {
-                    url: window.location.origin
+                    // url: window.location.origin
+                    url: 'https://esmael-ahmed.github.io/FreshCart-E-Commarce/'
                 }
             })
             console.log(data);
