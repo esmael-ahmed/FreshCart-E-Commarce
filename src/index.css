@@ -11,3 +11,60 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.main-color {
+  color: #0AAD0A !important;
+}
+.main-bg-color {
+  background-color: #0AAD0A !important;
+}
+
+a, a:hover {
+  color: black !important;
+  text-decoration: none !important;
+}
+
+.card {
+   /* Initial width of the card */
+  transition: all 0.3s ease !important; /* Transition property for smooth animation */
+}
+.card:hover {
+   /* Width of the card on hover */
+  transform: scale(1.1, 1.1) !important; /* Scale the card when hovering */
+}
+
+/* .home-card {
+  height: 370px !important;
+} */
+
+.footer {
+  background-color: #e5e4e2;
+  /* background-color: gray; */
+  margin-top: auto;
+}
+
+.appp {
+  min-height: 100vh !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.bordered-text::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 2px;
+  background-color: black;
+  bottom: -8px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.form-control:focus {
+  border-color: #0aad0a !important;
+  box-shadow: 0 0 0 0.25rem #43d643 !important;
+}
+
+.cart-bg {
+  background-color: #e5e4e2;
+}
