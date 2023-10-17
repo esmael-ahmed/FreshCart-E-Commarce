@@ -44,6 +44,7 @@ export default function WishlistProvider({children}) {
         if (data.status === 'success') {
             setUserWishList(data.data);
             setWishListCount(data.count);
+            localStorage.setItem('wishcount', data.count);
             return data;
         }
         } catch (error) {

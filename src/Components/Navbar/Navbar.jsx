@@ -67,7 +67,7 @@ export default function Navbar() {
     {token ? <>
       <li className="nav-item ms-3">
           <Link className="nav-link position-relative" to="/wishlist"><i className="fa-solid fa-heart fs-4 text-danger"></i><span className="position-absolute top-1 start-0 translate-middle badge rounded-pill bg-success">
-    {wishListCount}
+    {localStorage.getItem('wishcount')}
     <span className="visually-hidden">unread messages</span>
   </span></Link>
         </li>

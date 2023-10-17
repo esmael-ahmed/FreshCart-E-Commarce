@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useFormik } from 'formik'
 import React, { useContext, useState } from 'react'
 import { RotatingLines } from 'react-loader-spinner';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { authContext } from '../../Context/Authentication';
 import { cartContext } from '../../Context/CartContext';
 
@@ -117,6 +117,9 @@ export default function Login() {
         <button onClick={forgotPassword} className=' btn btn-warning'>Forgot Password !</button>
       </div>
       
+    </div>
+    <div className=' text-center h5 my-4 '>
+      <Link to={'/register'}>Don’t have an Account?</Link>
     </div>
     </form>
     </div>

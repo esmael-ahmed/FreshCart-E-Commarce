@@ -1,14 +1,18 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { wishListContext } from '../../Context/Wishlist'
 import { MutatingDots } from 'react-loader-spinner'
 import { cartContext } from '../../Context/CartContext'
 import toast from 'react-hot-toast'
 
 export default function WishList() {
-  let {userWishList } = useContext(wishListContext)
+  let {userWishList, getWishList } = useContext(wishListContext)
   let {deleteProductFromWishList} = useContext(wishListContext)
   let {addProductToCart, getUserCart} = useContext(cartContext);
 
+  useEffect(() => {
+    getWishList()
+  }, [])
+  
   async function deleteElement(id) {
     await deleteProductFromWishList(id);
   }
