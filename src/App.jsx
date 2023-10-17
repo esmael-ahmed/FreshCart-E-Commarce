@@ -22,6 +22,8 @@ import UserOrders from './Components/UserOrders/UserOrders';
 import ForgotPassword from './Components/ForgotPassword/ForgotPassword';
 import ResetCode from './Components/ResetCode/ResetCode';
 import UpdatePassword from './Components/UpdatePassword/UpdatePassword';
+import WishList from './Components/WishList/WishList';
+import WishlistProvider from './Context/Wishlist';
 
 
 function App() {
@@ -39,6 +41,7 @@ function App() {
       {path: 'updatepassword', element: <UpdatePassword />},
       {path: 'resetcode', element: <ResetCode />},
       {path: 'payment', element: <ProtectedRoute><Payment /></ProtectedRoute>},
+      {path: 'wishlist', element: <ProtectedRoute><WishList /></ProtectedRoute>},
       {path: 'allorders', element: <ProtectedRoute><UserOrders /></ProtectedRoute>},
       {path: 'categories', element: <ProtectedRoute><Categories /></ProtectedRoute>},
       {path: 'cart', element: <ProtectedRoute><Cart /></ProtectedRoute>},
@@ -50,7 +53,9 @@ function App() {
   <QueryClientProvider client={clintQuery}>
     <CartProvider>
       <AuthProvider>
+      <WishlistProvider>
         <RouterProvider router={myRouter} />
+        </WishlistProvider>
       </AuthProvider>
     </CartProvider>
     <Toaster />

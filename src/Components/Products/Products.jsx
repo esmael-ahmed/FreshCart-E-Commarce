@@ -6,45 +6,34 @@ import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import { cartContext } from '../../Context/CartContext';
 import toast from 'react-hot-toast';
+import { wishListContext } from '../../Context/Wishlist';
 
 
 
 export default function Products() {
 
   let {addProductToCart, getUserCart} = useContext(cartContext);
-  // const [isWishlist, setIsWishlist] = useState(true);
+  let {addProductToWishlist, getWishList} = useContext(wishListContext);
+  
 
-  // async function addProductToWishlist(id) {
+  async function addToWishlist(id) {
     
-  //   try {
-  //     let {data} = await axios.post(`https://ecommerce.routemisr.com/api/v1/wishlist`, {
-  //     "productId": id
-  //   }, { headers: {
-  //     token: localStorage.getItem('token'),
-  //   }})
-  //   console.log(data);
-  //   if (data.status === 'success') {
-  //     toast.success(data.message);
+    try {
+      await addProductToWishlist(id)
+      getWishList();
     
-  //   }
-  //   else {
-  //     toast.error('something went wrong...')
-  //   }
+    } catch (error) {
+      console.log(error);
+    }
     
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   setIsWishlist(false);
-  // }
+  }
  
 async function addProduct (id) {
         
         let res = await addProductToCart(id);
         if (res.status === 'success') {
           getUserCart()
-          toast.success(res.message, {
-            duration: 2000
-        })
+          toast.success(res.message)
         }
         else {
           toast.error('Somting Wrong ...')
@@ -92,11 +81,11 @@ async function addProduct (id) {
   visible={true}
 />
         </div>: data?.data.data.map((product, idx) => {return <div key={idx} className=' col-lg-2 col-md-3 col-6'>
-          
-          <div className="card shadow home-card">
-            {/* <div onClick={() => {addProductToWishlist(product.id)}} style={{cursor:'pointer'}} className=' position-absolute top-0 end-0'>
-            {isWishlist? <i className="fa-regular fa-heart fs-4"></i> : <i class="fa-solid fa-heart fs-4 text-danger"></i>}
-            </div> */}
+         
+          <div className="card position-relative shadow home-card">
+            <div onClick={() => {addToWishlist(product.id)}} style={{cursor:'pointer'}} className=' position-absolute top-0 end-0'>
+            <i className="fa-regular fa-heart fs-4"></i>
+            </div>
           <Link to={`/productdetails/${product.id}`}>
           <div  >
               <img style={{height:'200px'}} className=' w-100 card-img-top' src={product.imageCover} alt="product" />

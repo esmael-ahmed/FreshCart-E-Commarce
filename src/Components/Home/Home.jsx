@@ -7,11 +7,25 @@ import CategorySlider from '../CategorySlider/CategorySlider';
 import { Link } from 'react-router-dom';
 import { cartContext } from '../../Context/CartContext';
 import toast from 'react-hot-toast';
+import { wishListContext } from '../../Context/Wishlist';
 
 
 export default function Home() {
 
   let {addProductToCart, getUserCart} = useContext(cartContext);
+  let {addProductToWishlist, getWishList} = useContext(wishListContext);
+
+  async function addToWishlist(id) {
+    
+    try {
+      await addProductToWishlist(id)
+      getWishList();
+    
+    } catch (error) {
+      console.log(error);
+    }
+    
+  }
  
 async function addProduct (id) {
         
@@ -65,7 +79,10 @@ async function addProduct (id) {
 />
         </div>: data?.data.data.slice(0, 18).map((product, idx) => {return <div key={idx} className=' col-lg-2 col-md-3 col-6'>
           
-          <div className="card shadow home-card">
+          <div className="card position-relative shadow home-card">
+          <div onClick={() => {addToWishlist(product.id)}} style={{cursor:'pointer'}} className=' position-absolute top-0 end-0'>
+            <i className="fa-regular fa-heart fs-4"></i>
+            </div>
           <Link to={`/productdetails/${product.id}`}>
           <div>
               <img style={{height:'200px'}} className=' w-100 card-img-top' src={product.imageCover} alt="product" />

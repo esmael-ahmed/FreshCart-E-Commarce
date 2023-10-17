@@ -3,10 +3,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import navLogo from '../../images/freshcart-logo.svg'
 import { authContext } from '../../Context/Authentication'
 import { cartContext } from '../../Context/CartContext';
+import { wishListContext } from '../../Context/Wishlist';
 
 export default function Navbar() {
   const {token, setToken} = useContext(authContext);
   const {numOfCartItems} = useContext(cartContext);
+  const {wishListCount} = useContext(wishListContext);
   
 
   let navigateFunc = useNavigate();
@@ -22,7 +24,7 @@ export default function Navbar() {
     <Link className="navbar-brand" to="/home"><img src={navLogo} alt="" /></Link>
     {token? <ul className="navbar-nav ms-auto mb-2 mb-lg-0 mx-4">
     <li className="nav-item">
-          <Link className="nav-link position-relative" to="cart"><i className="fa-solid fa-cart-shopping"></i><span className="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-success">
+          <Link className="nav-link position-relative" to="/cart"><i className="fa-solid fa-cart-shopping"></i><span className="position-absolute top-1 start-0 translate-middle badge rounded-pill bg-success">
     {numOfCartItems}
     <span className="visually-hidden">unread messages</span>
   </span></Link>
@@ -63,12 +65,18 @@ export default function Navbar() {
         </div>
     </li>
     {token ? <>
+      <li className="nav-item ms-3">
+          <Link className="nav-link position-relative" to="/wishlist"><i className="fa-solid fa-heart fs-4 text-danger"></i><span className="position-absolute top-1 start-0 translate-middle badge rounded-pill bg-success">
+    {wishListCount}
+    <span className="visually-hidden">unread messages</span>
+  </span></Link>
+        </li>
       <li className="nav-item">
           <Link className="nav-link"  to="/allorders">All Orders</Link>
         </li>
-      {/* <li className="nav-item">
-          <Link className="nav-link"  to="/profile">{name?.split(" ").slice(0, 1)}</Link>
-        </li> */}
+      <li className="nav-item">
+          <Link className="nav-link"  to="/profile">Profile</Link>
+        </li>
         <li className="nav-item">
           <span onClick={logOut} style={{cursor:'pointer'}} className="nav-link">LogOut</span>
         </li></>: <>

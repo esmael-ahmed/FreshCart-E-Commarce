@@ -8,11 +8,27 @@ import "slick-carousel/slick/slick-theme.css";
 import { MutatingDots, RotatingLines } from 'react-loader-spinner';
 import { cartContext } from '../../Context/CartContext';
 import toast from 'react-hot-toast';
+import { wishListContext } from '../../Context/Wishlist';
 
 export default function ProductDetails() {
     let {addProductToCart, getUserCart} = useContext(cartContext);
+    let {addProductToWishlist, getWishList} = useContext(wishListContext);
     let {id} = useParams();
     const [isAdding, setIsAdding] = useState(false)
+
+
+    async function addToWishlist(id) {
+    
+        try {
+          await addProductToWishlist(id)
+          getWishList();
+        
+        } catch (error) {
+          console.log(error);
+        }
+        
+      }
+
 
     async function addProduct (id) {
         setIsAdding(true);
@@ -81,13 +97,23 @@ export default function ProductDetails() {
                         <p className=' fw-bold'>Price : {data?.data.data.price} EGP</p>
                         <p><i style={{'color':'#FFD700'}} className="fa-solid fa-star"></i><span className=' text-muted'> {data?.data.data.ratingsAverage}</span></p>
                     </div>
-                    <button onClick={() => {addProduct(data?.data.data.id)}} className=' btn btn-success w-100'>{!isAdding?"+ Add To Cart":<RotatingLines
+                    <div className=' d-flex justify-content-between align-items-center'>
+                    <div className=' w-75'>
+                        <button onClick={() => {addProduct(data?.data.data.id)}} className=' btn btn-success w-100'>{!isAdding?"+ Add To Cart":<RotatingLines
   strokeColor="white"
   strokeWidth="5"
   animationDuration="0.75"
   width="35"
   visible={true}
 />}</button>
+                        </div>
+                        <div onClick={() => {addToWishlist(data?.data.data.id)}} style={{cursor:'pointer'}} className=' '>
+            <i className="fa-regular fa-heart fs-4"></i>
+            </div>
+                        
+                    
+                    </div>
+                    
                 </div>
             </div>
             
