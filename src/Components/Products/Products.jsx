@@ -13,7 +13,8 @@ import { wishListContext } from '../../Context/Wishlist';
 export default function Products() {
 
   let {addProductToCart, getUserCart} = useContext(cartContext);
-  let {addProductToWishlist, getWishList} = useContext(wishListContext);
+  let {addProductToWishlist, getWishList, deleteProductFromWishList} = useContext(wishListContext);
+  
   
 
   async function addToWishlist(id) {
@@ -21,11 +22,24 @@ export default function Products() {
     try {
       await addProductToWishlist(id)
       getWishList();
+     
     
     } catch (error) {
       console.log(error);
     }
+   
+  }
+  async function removeFromWishlist(id) {
     
+    try {
+      await deleteProductFromWishList(id)
+      getWishList();
+     
+    
+    } catch (error) {
+      console.log(error);
+    }
+   
   }
  
 async function addProduct (id) {
@@ -83,9 +97,12 @@ async function addProduct (id) {
         </div>: data?.data.data.map((product, idx) => {return <div key={idx} className=' col-lg-2 col-md-3 col-6'>
          
           <div className="card position-relative shadow home-card">
-            <div onClick={() => {addToWishlist(product.id)}} style={{cursor:'pointer'}} className=' position-absolute top-0 end-0'>
-            <i className="fa-regular fa-heart fs-4"></i>
-            </div>
+            {localStorage.getItem('wishlistIds')?.includes(product.id)? <div onClick={() => {removeFromWishlist(product.id)}} style={{cursor:'pointer'}} className=' position-absolute top-0 end-0'>
+               <i className="fa-solid fa-heart fs-4 text-danger"></i>
+            </div>  : <div onClick={() => {addToWishlist(product.id)}} style={{cursor:'pointer'}} className=' position-absolute top-0 end-0'>
+               <i className="fa-regular fa-heart fs-4"></i>
+            </div>}
+            
           <Link to={`/productdetails/${product.id}`}>
           <div  >
               <img style={{height:'200px'}} className=' w-100 card-img-top' src={product.imageCover} alt="product" />

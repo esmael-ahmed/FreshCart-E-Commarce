@@ -12,7 +12,7 @@ import { wishListContext } from '../../Context/Wishlist';
 
 export default function ProductDetails() {
     let {addProductToCart, getUserCart} = useContext(cartContext);
-    let {addProductToWishlist, getWishList} = useContext(wishListContext);
+    let {addProductToWishlist, getWishList, deleteProductFromWishList} = useContext(wishListContext);
     let {id} = useParams();
     const [isAdding, setIsAdding] = useState(false)
 
@@ -22,11 +22,24 @@ export default function ProductDetails() {
         try {
           await addProductToWishlist(id)
           getWishList();
+         
         
         } catch (error) {
           console.log(error);
         }
+       
+      }
+      async function removeFromWishlist(id) {
         
+        try {
+          await deleteProductFromWishList(id)
+          getWishList();
+         
+        
+        } catch (error) {
+          console.log(error);
+        }
+       
       }
 
 
@@ -107,9 +120,12 @@ export default function ProductDetails() {
   visible={true}
 />}</button>
                         </div>
-                        <div onClick={() => {addToWishlist(data?.data.data.id)}} style={{cursor:'pointer'}} className=' '>
-            <i className="fa-regular fa-heart fs-4"></i>
-            </div>
+                        {localStorage.getItem('wishlistIds')?.includes(data?.data.data.id)? <div onClick={() => {removeFromWishlist(data?.data.data.id)}} style={{cursor:'pointer'}} >
+               <i className="fa-solid fa-heart fs-4 text-danger"></i>
+            </div>  : <div onClick={() => {addToWishlist(data?.data.data.id)}} style={{cursor:'pointer'}} >
+               <i className="fa-regular fa-heart fs-4"></i>
+            </div>}
+            
                         
                     
                     </div>

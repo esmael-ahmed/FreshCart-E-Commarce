@@ -35,7 +35,7 @@ export default function Payment() {
                 }, 
                 params: {
                     // url: window.location.origin
-                    url: 'https://esmael-ahmed.github.io/FreshCart-E-Commarce/'
+                    url: window.location.origin
                 }
             })
             console.log(data);

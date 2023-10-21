@@ -11,6 +11,7 @@ export let wishListContext = createContext();
 export default function WishlistProvider({children}) {
     const [userWishList, setUserWishList] = useState(null)
     const [wishListCount, setWishListCount] = useState(null)
+    const [wishListProductesId, setWishListProductesId] = useState(null)
 
 
     useEffect(() => {
@@ -27,6 +28,8 @@ export default function WishlistProvider({children}) {
       if (data.status === 'success') {
         toast.success(data.message);
         getWishList();
+        setWishListProductesId(data.data);
+        localStorage.setItem('wishlistIds', JSON.stringify(data.data) )
       }
       } catch (error) {
         toast.error(error);
@@ -64,6 +67,8 @@ export default function WishlistProvider({children}) {
         
         if (data.status === 'success') {
           toast.success(data.message);
+          setWishListProductesId(data.data);
+          localStorage.setItem('wishlistIds', JSON.stringify(data.data) )
           // setUserWishList(data.data);
           // setWishListCount(data.count);
           return data
@@ -80,7 +85,7 @@ export default function WishlistProvider({children}) {
      
 
 
-  return <wishListContext.Provider value={{userWishList, wishListCount, setWishListCount, setUserWishList, addProductToWishlist, getWishList, deleteProductFromWishList}}>
+  return <wishListContext.Provider value={{userWishList, wishListCount, wishListProductesId, setWishListCount, setUserWishList, addProductToWishlist, getWishList, deleteProductFromWishList}}>
 
 
     {children}
